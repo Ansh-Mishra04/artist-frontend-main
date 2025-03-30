@@ -1,0 +1,43 @@
+@import "slick-carousel/slick/slick.css";
+@import "slick-carousel/slick/slick-theme.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  color: #fff;
+  background-color: #000;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+html{
+  overflow-x: hidden;
+}
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.reel-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Ensures center alignment */
+}
+
+.play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Keeps it perfectly centered */
+  z-index: 2; /* Ensures it's above the video */
+}
+
