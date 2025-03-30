@@ -147,9 +147,7 @@ const ArtistSlider = ({ rows = 1 }) => {
               <div key={artist.id} className="px-4 cursor-pointer mb-10">
                 <div
                  className="group relative pointer-events-auto"
-                 onMouseUp={(e) => {
-                   if (e.button === 0) handleArtistClick(artist.id, index);
-                 }}
+                 
                  onTouchEnd={(e) => {
                    e.preventDefault();
                    handleArtistClick(artist.id, index);
@@ -167,7 +165,11 @@ const ArtistSlider = ({ rows = 1 }) => {
                       }}
                     />
                   </div>
-                  <div className="flex flex-col text-center items-center justify-end p-4">
+                  <div className="flex flex-col text-center items-center justify-end p-4"
+                  onMouseUp={(e) => {
+                     if (e.button === 0) handleArtistClick(artist.id, index);
+                   }}
+                  >
                     <p className={`text-lg font-semibold ${artist.id === currArtist ? "text-[#5DC9DE]" : "text-white"}`}>
                       {artist.stage_name}
                     </p>
