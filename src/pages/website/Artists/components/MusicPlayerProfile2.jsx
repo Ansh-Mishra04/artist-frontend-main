@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Slider from "react-slick";
 import "./TopPicksSection.css";
 import { useSelector } from "react-redux";
@@ -13,7 +13,6 @@ const MusicPlayerProfile2 = () => {
   const sliderRef = useRef(null); // Create a ref for the slider
 
   const artistData = useSelector((state) => state.topPick.topPicks);
-  console.log(artistData);
   const [currentAudio, setCurrentAudio] = useState(null);
   const [audio, setAudio] = useState(null);
   const [playingSongId, setPlayingSongId] = useState(null);
@@ -71,6 +70,15 @@ const MusicPlayerProfile2 = () => {
     }
   };
 
+  useEffect(() => {
+    return () => {
+      if (audio) {
+        audio.pause(); 
+        setPlayingSongId(null); 
+      }
+    };
+  }, [audio]); // The cleanup runs when the audio changes or when the component unmounts
+
   function rankToColor(rank) {
     const val = {
       1: "bg-emerald-400",
@@ -91,10 +99,10 @@ const MusicPlayerProfile2 = () => {
               <span className="text-[#5DC9DE]">LEADING ARTISTS </span> OF THE SPOTLIGHT
             </h2>
             <p className="text-gray-400 text-left mb-12">
-            The artists are grabing every opportunity and rising as the stars of tomorrow. What are you waiting for? Waiting for things to happen won’t make your dreams a reality—take the step and join today!
+              The artists are grabbing every opportunity and rising as the stars of tomorrow. What are you waiting for? 
             </p>
           </div>
-          <div className="sm:pe-4 ms-5 sm:ms-0 py-4 lg:py-0  ">
+          <div className="sm:pe-4 ms-5 sm:ms-0 py-4 lg:py-0">
             <button
               onClick={() => sliderRef.current.slickPrev()} // Use slickPrev()
               className="z-10 bg-gray-800 p-2 rounded-full hover:bg-gray-700 transition-colors mr-2"
