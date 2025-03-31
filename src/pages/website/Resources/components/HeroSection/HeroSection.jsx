@@ -62,8 +62,8 @@ const HeroSection = () => {
       />
 
       {/* Content */}
-      <div className="relative z-20 max-w-3xl w-full text-center space-y-6">
-        <h1 className="text-5xl font-bold">
+      <div className="relative mt-24 z-20 max-w-3xl w-full text-center space-y-6">
+        <h1 className="text-5xl font-bold mt-12">
         FIND WHAT YOU  <span className="text-cyan-400">WANT TO LEARN.</span>
         </h1>
 

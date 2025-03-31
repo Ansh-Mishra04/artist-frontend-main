@@ -252,165 +252,163 @@ function Resources() {
   }, [reelPlaying, setReelPlaying]);
   return (
     <>
-      {
-        error ? (
-          <div className="text-center flex flex-col justify-center items-center h-[80vh] w-full ">
-            <h1 className="text-3xl">{error}</h1>
-            <Link to={"/"}>
-              <button className="px-5 py-2 bg-cyan-400 text-black mt-4 rounded-full">
-                Go Back
-              </button>
-            </Link>
+      {error ? (
+        <div className="text-center flex flex-col justify-center items-center h-[80vh] w-full ">
+          <h1 className="text-3xl">{error}</h1>
+          <Link to={"/"}>
+            <button className="px-5 py-2 bg-cyan-400 text-black mt-4 rounded-full">
+              Go Back
+            </button>
+          </Link>
+        </div>
+      ) : (
+        <div>
+          <HeroSection />
+          <div className=" lg:px-10 px-6 xl:px-16">
+            <div className="container w-full  h-[1px] mx-auto bg-gray-400 opacity-30 relative"></div>
           </div>
-        ) : (
-          <div>
-            <HeroSection />
-            <div className=" lg:px-10 px-6 xl:px-16">
-              <div className="container w-full  h-[1px] mx-auto bg-gray-400 opacity-30 relative"></div>
-            </div>
-            <PodcastSlider title={"PODCASTS"} />
+          <PodcastSlider title={"PODCASTS"} />
 
-            {/* <ReelsSlider title={"Reels"} /> */}
-            {reelsData && reelsData.length > 0 ? (
-              <div className="w-full bg-black/95 pb-1">
-                {/* Title */}
-                <h2 className="text-[#5DC9DE] text-2xl font-bold uppercase drop-shadow-[0_0_20px_white] text-center">reels</h2>
+          {/* <ReelsSlider title={"Reels"} /> */}
+          {reelsData && reelsData.length > 0 ? (
+            <div className="w-full bg-black/95 pb-1">
+              {/* Title */}
+              <h2 className="text-[#5DC9DE] text-2xl font-bold uppercase drop-shadow-[0_0_20px_white] text-center">
+                reels
+              </h2>
 
-                {/* Slider Container */}
-                <div className="reels-slider">
-                  <Slider ref={setSliderRef} {...settings}>
-                    {reelsData.map((reel, index) => (
-                      <div key={reel.id} className="px-2 slick-slide">
-                        <div
-                          className="relative overflow-hidden rounded-xl cursor-pointer"
-                          style={{ aspectRatio: '3/4.5' }}
-                          onMouseDown={handleMouseDown}
-                          onMouseMove={handleMouseMove}
-                          onMouseUp={() => handleMouseUp(reel.video_file_url)}
-                        >
-                          <div className="w-full h-full rounded-xl overflow-hidden">
-                            <Image
-                              src={reel.thumbnails[0]}
-                              fallback={<Shimmer width={300} height={400} />}
-                              alt={reel.name}
-                              NativeImgProps={{
-                                className: "w-full h-full object-cover"
-                              }}
-                            />
-                          </div>
+              {/* Slider Container */}
+              <div className="reels-slider">
+                <Slider ref={setSliderRef} {...settings}>
+                  {reelsData.map((reel, index) => (
+                    <div key={reel.id} className="px-2 slick-slide w-5">
+                      <div
+                        className="relative overflow-hidden rounded-xl cursor-pointer"
+                        style={{ aspectRatio: "3/4.5" }}
+                        onMouseDown={handleMouseDown}
+                        onMouseMove={handleMouseMove}
+                        onMouseUp={() => handleMouseUp(reel.video_file_url)}
+                      >
+                        <div className="w-full h-full rounded-xl overflow-hidden">
+                          <Image
+                            src={reel.thumbnails[0]}
+                            fallback={<Shimmer width={300} height={400} />}
+                            alt={reel.name}
+                            NativeImgProps={{
+                              className: "w-full h-full object-cover",
+                            }}
+                          />
+                        </div>
 
-                          {/* Play button positioned at the center */}
-                          
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-center justify-center">
+                        {/* Play button positioned at the center */}
+
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-center justify-center">
                           <img
-    src="/assets/images/playButton.png"
-    alt="Play"
-    className="w-16 h-16 sm:w-12 sm:h-12 md:w-16 md:h-16 lg:w-20 lg:h-20"
-  />
+                            src="/assets/images/playButton.png"
+                            alt="Play"
+                            className="w-16 h-16 sm:w-12 sm:h-12 md:w-16 md:h-16 lg:w-20 lg:h-20"
+                          />
 
-                              {/* <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white">
+                          {/* <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white">
                                 <path d="M8 5v14l11-7z" />
                               </svg> */}
-                            </div>
-                          
                         </div>
                       </div>
-                    ))}
-                  </Slider>
-                </div>
-
+                    </div>
+                  ))}
+                </Slider>
               </div>
-            ) : (
-              ""
-            )}
-            {/* <ReelsSlider title={"Success Stories"} /> */}
-            {reelsDataSuccess && reelsDataSuccess.length > 0 ? (
-              <div className="w-full bg-black/95 pb-1">
-                {/* Title */}
-                <h2 className="text-[#5DC9DE] text-2xl font-bold uppercase drop-shadow-[0_0_20px_white] text-center">SUCCESS STORIES</h2>
+            </div>
+          ) : (
+            ""
+          )}
+          {/* <ReelsSlider title={"Success Stories"} /> */}
+          {reelsDataSuccess && reelsDataSuccess.length > 0 ? (
+            <div className="w-full bg-black/95 pb-1">
+              {/* Title */}
+              <h2 className="text-[#5DC9DE] text-2xl font-bold uppercase drop-shadow-[0_0_20px_white] text-center">
+                SUCCESS STORIES
+              </h2>
 
-                {/* Slider Container */}
-                <div className="reels-slider">
-                  <Slider ref={setSliderRef} {...settingsSuccess}>
-                    {reelsDataSuccess.map((reel, index) => (
-                      <div key={reel.id} className="px-2 slick-slide">
-                        <div
-                          className="relative overflow-hidden rounded-xl cursor-pointer"
-                          style={{ aspectRatio: '3/4.5' }}
-                          onMouseDown={handleMouseDown}
-                          onMouseMove={handleMouseMove}
-                          onMouseUp={() => handleMouseUp(reel.video_file_url)}
-                        >
-                          <div className="w-full h-full rounded-xl overflow-hidden">
-                            <Image
-                              src={reel.thumbnails[0]}
-                              fallback={<Shimmer width={300} height={400} />}
-                              alt={reel.name}
-                              NativeImgProps={{
-                                className: "w-full h-full object-cover"
-                              }}
-                            />
-                          </div>
-
-                          {/* Play button positioned at the center */}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-center justify-center">
-                            <img
-                              src="/assets/images/playButton.png"
-                              alt="Play"
-                              className="w-20 h-20 sm:w-12 sm:h-12 md:w-20 md:h-20 lg:w-20 lg:h-20"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </Slider>
-                </div>
-
-              </div>
-            ) : (
-              ""
-            )}
-
-
-
-            {isModalOpen && (
-              <div
-                className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50"
-                onClick={closeModal}
-              >
-                <div
-                  className="relative bg-black rounded-lg shadow-lg  max-w-3xl w-full"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <button
-                    className="absolute top-0 right-0  text-white w-12 h-12 rounded-full flex items-center justify-center text-3xl z-50 font-bold shadow-lg"
-                    onClick={closeModal}
-                  >
-                    &times;
-                  </button>
-
-                  <div className="relative">
-                    <video
-                      id="video-player"
-                      src={selectedVideo}
-                      className="w-full h-auto rounded-lg"
-                      autoPlay
-                      playsInline
-                    />
-                    {!isPlaying && (
-                      <button
-                        onClick={togglePlayPause}
-                        className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 text-white text-6xl rounded-full w-20 h-20 mx-auto my-auto"
+              {/* Slider Container */}
+              <div className="reels-slider">
+                <Slider ref={setSliderRef} {...settingsSuccess}>
+                  {reelsDataSuccess.map((reel, index) => (
+                    <div key={reel.id} className="px-2 slick-slide">
+                      <div
+                        className="relative overflow-hidden rounded-xl cursor-pointer"
+                        style={{ aspectRatio: "3/4.5" }}
+                        onMouseDown={handleMouseDown}
+                        onMouseMove={handleMouseMove}
+                        onMouseUp={() => handleMouseUp(reel.video_file_url)}
                       >
-                        ▶
-                      </button>
-                    )}
-                  </div>
+                        <div className="w-full h-full rounded-xl overflow-hidden">
+                          <Image
+                            src={reel.thumbnails[0]}
+                            fallback={<Shimmer width={300} height={400} />}
+                            alt={reel.name}
+                            NativeImgProps={{
+                              className: "w-full h-full object-cover",
+                            }}
+                          />
+                        </div>
+
+                        {/* Play button positioned at the center */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-center justify-center">
+                          <img
+                            src="/assets/images/playButton.png"
+                            alt="Play"
+                            className="w-20 h-20 sm:w-12 sm:h-12 md:w-20 md:h-20 lg:w-20 lg:h-20"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </Slider>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
+
+          {isModalOpen && (
+            <div
+              className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50"
+              onClick={closeModal}
+            >
+              <div
+                className="relative bg-black rounded-lg shadow-lg  max-w-3xl w-full"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  className="absolute top-0 right-0  text-white w-12 h-12 rounded-full flex items-center justify-center text-3xl z-50 font-bold shadow-lg"
+                  onClick={closeModal}
+                >
+                  &times;
+                </button>
+
+                <div className="relative">
+                  <video
+                    id="video-player"
+                    src={selectedVideo}
+                    className="w-full h-auto rounded-lg"
+                    autoPlay
+                    playsInline
+                  />
+                  {!isPlaying && (
+                    <button
+                      onClick={togglePlayPause}
+                      className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 text-white text-6xl rounded-full w-20 h-20 mx-auto my-auto"
+                    >
+                      ▶
+                    </button>
+                  )}
                 </div>
               </div>
-            )}
-          </div>
-        )}
+            </div>
+          )}
+        </div>
+      )}
     </>
   );
 }
