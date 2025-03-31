@@ -8,14 +8,15 @@ import { ArrowLeft, ArrowRight } from "lucide-react"; // Import icons
 import { Bounce, toast, ToastContainer } from "react-toastify";
 import axiosApi from "../../../../../conf/app";
 
-const instagramRegex = /^(https?:\/\/)?(www\.)?instagram\.com\/[a-zA-Z0-9._]+\/?$/;
+const instagramRegex =
+  /^(https?:\/\/)?(www\.)?instagram\.com\/[a-zA-Z0-9._]+\/?$/;
 
-function HeroSection({professions}) {
+function HeroSection({ professions }) {
   const navigate = useNavigate();
   const sliderRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [id,setId] = useState(null);
+  const [id, setId] = useState(null);
   // const [professions,setProfessions] = useState([])
   const isValidEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -44,12 +45,11 @@ function HeroSection({professions}) {
   const [timers, setTimers] = useState([]);
   const loading = useSelector((state) => state.event.loading);
 
-  const handleBookSpot = (id)=>{
-    debugger
+  const handleBookSpot = (id) => {
+    debugger;
     setIsModalOpen(true);
     setId(id);
-  }
-
+  };
 
   useEffect(() => {
     // if(isModalOpen){
@@ -85,10 +85,8 @@ function HeroSection({professions}) {
         const interval = setInterval(updateTimers, 1000);
         return () => clearInterval(interval);
       }
-
     }
-  }, [upcomingEvents,isModalOpen]);
-
+  }, [upcomingEvents, isModalOpen]);
 
   const dateFormat = (date) => {
     const eventDate = new Date(date);
@@ -116,26 +114,35 @@ function HeroSection({professions}) {
       e.preventDefault();
       console.log("Form submitted:", formData);
       if (!instagramRegex.test(formData.instagram_handle)) {
-        toast.error("Invalid Instagram URL! Please enter a valid profile link.", {
-          position: "top-right",
-          autoClose: 4000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-          transition: Bounce,
-        });
+        toast.error(
+          "Invalid Instagram URL! Please enter a valid profile link.",
+          {
+            position: "top-right",
+            autoClose: 4000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            transition: Bounce,
+          }
+        );
         return; // Stop form submission
       }
       if (!isValidEmail(formData.email)) {
-        toast.error("Invalid Email Address!", { position: "top-right", theme: "dark" });
+        toast.error("Invalid Email Address!", {
+          position: "top-right",
+          theme: "dark",
+        });
         return;
       }
 
       if (!isValidPhoneNumber(formData.phone)) {
-        toast.error("Invalid Phone Number! Must be 10 digits.", { position: "top-right", theme: "dark" });
+        toast.error("Invalid Phone Number! Must be 10 digits.", {
+          position: "top-right",
+          theme: "dark",
+        });
         return;
       }
       const response = await axiosApi.post(`/events/bookings/${id}`, formData);
@@ -167,7 +174,6 @@ function HeroSection({professions}) {
       }
     };
 
-
     const handleChange = (e) => {
       setFormData({
         ...formData,
@@ -188,7 +194,9 @@ function HeroSection({professions}) {
               </h2>
               <button
                 type="button"
-                onClick={() => {setIsModalOpen(false)}}
+                onClick={() => {
+                  setIsModalOpen(false);
+                }}
                 className="text-gray-400 hover:text-white"
               >
                 ✕
@@ -277,13 +285,12 @@ function HeroSection({professions}) {
               </select>
             </div>
 
-              <button
-                type="submit"
-                className="w-full bg-cyan-400 hover:bg-cyan-500 text-black font-medium py-2 px-4 rounded"
-              >
-                Submit
-              </button>
-
+            <button
+              type="submit"
+              className="w-full bg-cyan-400 hover:bg-cyan-500 text-black font-medium py-2 px-4 rounded"
+            >
+              Submit
+            </button>
           </form>
         </div>
       </div>
@@ -387,15 +394,15 @@ function HeroSection({professions}) {
                           <span className="text-[#2DDA89] text-[48px] font-extrabold">
                             ₹{event.rewards ? event.reward_amount : "0"}
                           </span>
-                                                                                                                                                                                                        <div
-                                                                                                      className="my-8 px-6 z-40 py-3 hover:font-bold transition delay-300 bg-[#5DC9DE] rounded-3xl cursor-pointer text-black text-lg font-semibold drop-shadow-[0_0_20px_white]"
-                                                                                                      onClick={(e) => {
-                                                                                                        e.stopPropagation(); // Prevents navigation when clicking inside the button
-                                                                                                        handleBookSpot(event.id); // Call the booking function
-                                                                                                      }}
-                                                                                                    >
-                                                                                                      Book Your Spot Now
-                                                                                                    </div>
+                          <div
+                            className="my-8 px-6 z-40 py-3 hover:font-bold transition delay-300 bg-[#5DC9DE] rounded-3xl cursor-pointer text-black text-lg font-semibold drop-shadow-[0_0_20px_white]"
+                            onClick={(e) => {
+                              e.stopPropagation(); // Prevents navigation when clicking inside the button
+                              handleBookSpot(event.id); // Call the booking function
+                            }}
+                          >
+                            Book Your Spot Now
+                          </div>
                         </div>
                       </div>
                     </div>

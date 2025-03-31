@@ -60,11 +60,7 @@ function PreviousEventSection() {
           }
         `}
       </style>
-      <img
-        src={Elipse}
-        className="absolute w-[500px] h-[600px] -z-0 right-0 -top-[300px]"
-        alt=""
-      />
+      
       <div className="px-8 py-12 md:px-10 xl:px-16 container mx-auto">
         <div className="w-full uppercase font-extrabold text-[55px] py-8">
           Previous Events
