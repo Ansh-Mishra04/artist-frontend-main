@@ -9,6 +9,8 @@ function Leaderboard() {
   const artistsData = useSelector(
     (state) => state.leaderboard.history_leaderboard
   );
+  console.log(artistsData);
+  
   const loading = useSelector((state) => state.leaderboard.loading);
   const [searchArtist, setSearchArtist] = useState("");
   const artistRefs = useRef({});
@@ -18,10 +20,12 @@ function Leaderboard() {
     location: [],
     stageName: [],
     rank: [],
+    profession: [],
   });
   const [uniqueLocations, setUniqueLocations] = useState([]);
   const [uniqueStageNames, setUniqueStageNames] = useState([]);
   const [uniqueRanks, setUniqueRanks] = useState([]);
+  const [uniqueProfessions, setUniqueProfessions] = useState([]);
 
   const handleSearch = (artist_name) => {
     if (artist_name.trim() === "") {
@@ -55,16 +59,19 @@ function Leaderboard() {
     const locations = new Set();
     const stageNames = new Set();
     const ranks = new Set();
+    const professions = new Set();
 
     Object.values(artistsData).flat().forEach((artist) => {
       locations.add(artist.location);
       stageNames.add(artist.stage_name);
       ranks.add(artist.rank);
+      professions.add(artist.profession);
     });
 
     setUniqueLocations([...locations]);
     setUniqueStageNames([...stageNames]);
     setUniqueRanks([...ranks]);
+    setUniqueProfessions([...professions]);
   }, [artistsData]);
 
   const handleProfileClick = (artistId) => {
@@ -97,7 +104,8 @@ function Leaderboard() {
             filters.location.includes(artist.location)) &&
           (filters.stageName.length === 0 ||
             filters.stageName.includes(artist.stage_name)) &&
-          (filters.rank.length === 0 || filters.rank.includes(artist.rank))
+          (filters.rank.length === 0 || filters.rank.includes(artist.rank)) && 
+          (filters.profession.length === 0 ||filters.profession.includes(artist.profession))
         );
       });
     setArtistExists(filteredArtists);
@@ -336,13 +344,13 @@ function Leaderboard() {
               />
             </div>
             <div className="mb-4">
-              <label className="block text-gray-300 mb-2">Stage Name</label>
+              <label className="block text-gray-300 mb-2">Proffesion</label>
               <Select
-                name="stageName"
+                name="proffesion"
                 isMulti
-                options={uniqueStageNames.map((stageName) => ({
-                  value: stageName,
-                  label: stageName,
+                options={uniqueProfessions.map((profession) => ({
+                  value: profession,
+                  label: profession,
                 }))}
                 className="basic-multi-select"
                 classNamePrefix="select"
@@ -350,21 +358,7 @@ function Leaderboard() {
                 onChange={handleFilterChange}
               />
             </div>
-            <div className="mb-4">
-              <label className="block text-gray-300 mb-2">Rank</label>
-              <Select
-                name="rank"
-                isMulti
-                options={uniqueRanks.map((rank) => ({
-                  value: rank,
-                  label: rank,
-                }))}
-                className="basic-multi-select"
-                classNamePrefix="select"
-                styles={customStyles}
-                onChange={handleFilterChange}
-              />
-            </div>
+            
             <div className="flex justify-end">
               <button
                 className="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg mr-2"

@@ -55,7 +55,7 @@ function HeroSection() {
   </button>
     <button
     onClick={() => {
-      window.location.href = import.meta.env.VITE_PORTAL_URL + "/auth/login";
+      window.location.href = import.meta.env.VITE_PORTAL_URL + "/auth/signup";
     }}
     className="bg-[#5DC9DE] hover:font-bold transition delay-300 w-full lg:w-[300px] m-1 text-sm lg:text-base h-[40px] lg:h-[50px] text-black font-semibold py-3 px-8 rounded-full justify-center items-center"
   >

@@ -60,6 +60,15 @@ const ArtistProfile = ({ id }) => {
     fetchArtistDetail();
   }, [id]);
 
+  
+ useEffect(() => {
+    return () => {
+      if (audio) {
+        audio.pause(); 
+        setPlayingSongId(null); 
+      }
+    };
+  }, [audio]); 
   return (
     <>
       {loading && (
@@ -89,7 +98,6 @@ const ArtistProfile = ({ id }) => {
               {/* Profile Info */}
               <div className="flex-1">
                 <h1 className="text-3xl font-bold mb-2">{artist.name}</h1>
-                <h2 className="text-3xl text-white mb-1 font-bold">{artist.name}</h2>
                 <p className="text-gray-400 mb-1 font-extrabold">
                   Stage Name: <span className="text-[#5DC9DE]">{artist.stage_name}</span>
                 </p>
@@ -118,7 +126,7 @@ const ArtistProfile = ({ id }) => {
                   <th className="text-left pb-4 relative left-4">SONG'S NAME</th>
                   <th className="text-left pb-4">PLAYS</th>
                   <th className="text-center pb-4">TIME</th>
-                  <th className="sm:text-right text-center pb-4">PLAY</th>
+                  <th className="sm: text-center pb-4">PLAY</th>
                 </tr>
               </thead>
               <tbody>

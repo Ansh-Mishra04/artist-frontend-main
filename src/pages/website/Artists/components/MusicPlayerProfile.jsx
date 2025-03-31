@@ -30,24 +30,24 @@ const MusicPlayerProfile = () => {
   const handleCloseModal = () => {
     setSelectedImage(null);
   };
-const handleDownload = async () => {
-  if (selectedImage) {
-    try {
-      const response = await fetch(selectedImage);
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", "image.jpg"); // This will open the "Save As" dialog
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error("Failed to download image:", error);
+  const handleDownload = async () => {
+    if (selectedImage) {
+      try {
+        const response = await fetch(selectedImage);
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "image.jpg"); // This will open the "Save As" dialog
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      } catch (error) {
+        console.error("Failed to download image:", error);
+      }
     }
-  }
-};
+  };
   const [rankedArtists, setRankedArtists] = useState([]);
   // const rankedArtists = useSelector((state) => state.topPick.topPicks);
 
@@ -66,7 +66,6 @@ const handleDownload = async () => {
 
     // console.log(JSON.stringify(artist));
   };
-
 
   const handlePlayPauseVideo = () => {
     if (videoRef.current) {
@@ -107,8 +106,12 @@ const handleDownload = async () => {
   };
 
   const fetchRankedArtists = async () => {
-    const response = await axiosApi.get(`/artists/search?q=${artist.profession}`);
-    setRankedArtists(response.data.data.filter(data => data.id != id).slice(0, 8));
+    const response = await axiosApi.get(
+      `/artists/search?q=${artist.profession}`
+    );
+    setRankedArtists(
+      response.data.data.filter((data) => data.id != id).slice(0, 8)
+    );
   };
   const formatListeners = (views) => {
     if (views >= 1000000) {
@@ -123,7 +126,7 @@ const handleDownload = async () => {
     fetchIndividualArtist();
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [id]);
-  const handleSongDownload = (song,name) => {
+  const handleSongDownload = (song, name) => {
     const link = document.createElement("a");
     console.log(name);
 
@@ -230,7 +233,6 @@ const handleDownload = async () => {
                 <p className="text-gray-400 mb-6">{artist.bio}</p>
 
                 <div className="flex justify-center sm:justify-normal gap-4">
-
                   <a
                     href={artist.facebook_url}
                     className="text-white hover:text-white"
@@ -300,8 +302,9 @@ const handleDownload = async () => {
                       <td className="py-4">
                         <div className="ms-5 ">
                           <div className="font-medium  ">{song.name}</div>
-                          <div className="text-gray-400 text-xs lg:text-sm ">{song.primary_artist}</div>
-                          
+                          <div className="text-gray-400 text-xs lg:text-sm ">
+                            {song.primary_artist}
+                          </div>
                         </div>
                       </td>
                       <td className="py-4">{song.total_views}</td>
@@ -333,7 +336,7 @@ const handleDownload = async () => {
                         <div className="flex justify-center items-center">
                           <button
                             className="min-w-[30px] w-[30px] min-h-[30px] h-[30px] flex items-center justify-center rounded-full bg-[#5DC9DE] ml-4"
-                            onClick={() => handleSongDownload(song,song.name)}
+                            onClick={() => handleSongDownload(song, song.name)}
                           >
                             <IoIosArrowRoundDown className="text-black" />
                           </button>
@@ -345,19 +348,20 @@ const handleDownload = async () => {
             </table>
 
             {/* Image Gallery */}
-                        <div className="grid grid-cols-4 h-auto gap-4">
+            <div className="grid grid-cols-4 h-auto gap-4">
               {artist &&
-                artist.photos.map((src, index) => (
-                  <div key={index} className="aspect-square">
+                artist.photos.slice(1).map((src, index) => (
+                  <div key={index + 1} className="aspect-square">
                     <img
                       src={src}
-                      alt={`Gallery image ${index + 1}`}
+                      alt={`Gallery image ${index + 2}`}
                       className="w-full h-full object-cover cursor-pointer"
                       onClick={() => handleImageClick(src)}
                     />
                   </div>
                 ))}
             </div>
+
             {selectedImage && (
               <div className="fixed inset-0 bg-black pb-6  bg-opacity-70 flex items-center justify-center z-50">
                 <div className="relative   p-4 rounded-lg max-w-[90%] max-h-[90%]">
@@ -424,7 +428,9 @@ const RelatedArtists = ({ rankedArtists }) => {
                 <p className="text-white text-center text-md font-medium">
                   {artist.stage_name}
                 </p>
-                <p className="text-gray-400 text-sm">{formatListeners(artist.total_views)}</p>
+                <p className="text-gray-400 text-sm">
+                  {formatListeners(artist.total_views)}
+                </p>
               </div>
             </Link>
           ))}

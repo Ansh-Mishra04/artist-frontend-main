@@ -215,7 +215,7 @@ const MusicPlayerProfile2 = () => {
   ) : (
     <div className="bg-black text-white min-h-screen py-14">
       <div className="container mx-auto">
-        <Shimmer width={300} height={600} />
+        {/* <Shimmer width={300} height={600} /> */}
       </div>
     </div>
   );

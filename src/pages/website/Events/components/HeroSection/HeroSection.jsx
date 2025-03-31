@@ -9,7 +9,8 @@ import { Bounce, toast, ToastContainer } from "react-toastify";
 import axiosApi from "../../../../../conf/app";
 
 const instagramRegex =
-  /^(https?:\/\/)?(www\.)?instagram\.com\/[a-zA-Z0-9._]+\/?$/;
+  /^(https?:\/\/)?(www\.)?instagram\.com\/([a-zA-Z0-9._]+)\/?/
+
 
 function HeroSection({ professions }) {
   const navigate = useNavigate();
