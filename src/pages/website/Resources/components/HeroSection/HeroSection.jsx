@@ -64,11 +64,12 @@ const HeroSection = () => {
       {/* Content */}
       <div className="relative mt-24 z-20 max-w-3xl w-full text-center space-y-6">
         <h1 className="text-5xl font-bold mt-12">
-        FIND WHAT YOU  <span className="text-cyan-400">WANT TO LEARN.</span>
+          FIND WHAT YOU <span className="text-cyan-400">WANT TO LEARN.</span>
         </h1>
 
         <p className="text-gray-300 text-lg">
-        Search for videos, podcasts, and tutorials to enhance your skills and knowledge across various topics.
+          Search for videos, podcasts, and tutorials to enhance your skills and
+          knowledge across various topics.
         </p>
         {/* Search bar */}
         <div className="flex justify-center mt-8 relative" ref={dropdownRef}>
@@ -82,38 +83,62 @@ const HeroSection = () => {
             />
             <button className="px-4 sm:px-8 py-3 bg-cyan-400 hover:bg-cyan-500 rounded-full flex items-center justify-center transition-colors ml-2 mr-2">
               <img src={searchIc} alt="Search Icon" />
-              <span className="ml-2 text-gray-800 font-medium hidden sm:inline">Search</span>
+              <span className="ml-2 text-gray-800 font-medium hidden sm:inline">
+                Search
+              </span>
             </button>
           </div>
 
           {/* Search Results Dropdown */}
-          {showDropdown && searchResults.length > 0 && (
-            <div className="absolute top-full mt-2 w-[100%] lg:w-[600px] max-h-[400px] overflow-y-auto bg-gray-900/95 backdrop-blur-sm rounded-xl shadow-lg">
-              {searchResults.map((result) => (
-                <div
-                  key={result.id}
-                  onClick={() => {
-                    navigate(`/content/${result.id}`);
-                    setShowDropdown(false);
-                  }}
-                  className="flex items-center gap-4 p-4 hover:bg-gray-800/50 cursor-pointer transition-colors"
-                >
-                  <img
-                    src={result.thumbnails?.[0] || '/assets/images/default-thumbnail.png'}
-                    alt={result.name}
-                    className="w-16 h-16 object-cover rounded-lg"
-                  />
-                  <div className="flex-1">
-                    <h3 className="font-medium text-white text-left">{result.name}</h3>
-                    <div className="flex items-center gap-2 text-sm text-gray-400">
-                      <span>{result.stage_name}</span>
-                      <span>{formatViews(result.total_views)}</span>
+          {/* Search Results Dropdown */}
+          {showDropdown && (
+            <>
+              {searchResults.length > 0 ? (
+                <div className="absolute top-full mt-2 w-[100%] lg:w-[600px] max-h-[400px] overflow-y-auto bg-gray-900/95 backdrop-blur-sm rounded-xl shadow-lg">
+                  {searchResults.map((result) => (
+                    <div
+                      key={result.id}
+                      onClick={() => {
+                        navigate(`/content/${result.id}`);
+                        setShowDropdown(false);
+                      }}
+                      className="flex items-center gap-4 p-4 hover:bg-gray-800/50 cursor-pointer transition-colors"
+                    >
+                      <img
+                        src={
+                          result.thumbnails?.[0] ||
+                          "/assets/images/default-thumbnail.png"
+                        }
+                        alt={result.name}
+                        className="w-16 h-16 object-cover rounded-lg"
+                      />
+                      <div className="flex-1">
+                        <h3 className="font-medium text-white text-left">
+                          {result.name}
+                        </h3>
+                        <div className="flex items-center gap-2 text-sm text-gray-400">
+                          <span>{result.stage_name}</span>
+                          <span>{formatViews(result.total_views)}</span>
+                        </div>
+                      </div>
+                      <img
+                        src="/assets/images/arrowRightIc.svg"
+                        alt="arrowRight"
+                        className="w-4 h-4 mx-2"
+                      />
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                searchTerm.trim() !== "" && (
+                  <div className="absolute top-full mt-2 w-[100%] lg:w-[600px]">
+                    <div className="h-6 mt-4 text-red-500 transition-opacity duration-500">
+                      Nothing to show.
                     </div>
                   </div>
-                    <img src="/assets/images/arrowRightIc.svg" alt="arrowRight" className="w-4 h-4 mx-2" />
-                </div>
-              ))}
-            </div>
+                )
+              )}
+            </>
           )}
         </div>
       </div>

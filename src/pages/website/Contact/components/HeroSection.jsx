@@ -7,6 +7,7 @@ import ContactBG from '../../../../../public/assets/images/music_bg.png'
 import Glow from '../../../../../public/assets/images/contact-elipise.png'
 
 const instagramRegex = /^(https?:\/\/)?(www\.)?instagram\.com\/[a-zA-Z0-9._]+\/?$/;
+
 function HeroSection() {
   const [modal,setModal] = useState(false)
   const [formData, setFormData] = useState({
@@ -43,8 +44,27 @@ function HeroSection() {
       toast.error("Invalid Email Address!", { position: "top-right", theme: "dark" });
       return;
     }
-
-  
+    if (!instagramRegex.test(formData.instagram_handle)) {
+      toast.error(
+        "Invalid Instagram URL! Please enter a valid profile link.",
+        {
+          position: "top-right",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Bounce,
+        }
+      );
+      return; 
+    }
+    if (!isValidPhoneNumber(formData.phone)) {
+      toast.error("Invalid Phone Number! Must be 10 digits.", { position: "top-right", theme: "dark" });
+      return;
+    }
 
     // Create FormData object
     const data = new FormData();
@@ -56,28 +76,28 @@ function HeroSection() {
     console.log('Form Data:', formData);
     const response = await axiosApi.post('/contacts',formData)
     if(response.status == 201){
-        setModal(true)
-          setFormData({
-            name: '',
-            email: '',
-            phone: '',
-            instagram_handle: '',
-            description: '',
-          })
-      }
-      else{
-        toast.error('OOPS! Something went wrong', {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-          transition: Bounce,
-          });
-      }
+      setModal(true)
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        instagram_handle: '',
+        description: '',
+      })
+    }
+    else{
+      toast.error('OOPS! Something went wrong', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+      });
+    }
     // Optionally, you can send the formData to an API or server here
     // axiosApi.post('/events/bookings', data);
   };
@@ -104,10 +124,10 @@ function HeroSection() {
             <span className="text-[#ffffff]">OPH Contact Details: </span>
             <div className="flex-col flex lg:pl-5">
               <a href="tel:+919956856987">
-              <span className="text-[#2DDA89] mt-3 lg:mt-0">+91 - 99568 56987</span>
+                <span className="text-[#2DDA89] mt-3 lg:mt-0">+91 - 99568 56987</span>
               </a>
               <a href="tel:+919956856987">
-              <span className="text-[#2DDA89] mt-3">+91 - 99568 56987</span>
+                <span className="text-[#2DDA89] mt-3">+91 - 99568 56987</span>
               </a>
             </div>
           </div>
@@ -116,7 +136,7 @@ function HeroSection() {
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <div>
               <label htmlFor="fullname" className="block text-sm font-medium text-gray-300 mb-4">
-                Full Name:
+                Full Name: <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
@@ -132,7 +152,7 @@ function HeroSection() {
 
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-4">
-                Email:
+                Email: <span className="text-red-500">*</span>
               </label>
               <input
                 type="email"
@@ -148,7 +168,7 @@ function HeroSection() {
 
             <div>
               <label htmlFor="contact" className="block text-sm font-medium text-gray-300 mb-4">
-                Contact:
+                Contact: <span className="text-red-500">*</span>
               </label>
               <input
                 type="tel"
@@ -164,7 +184,7 @@ function HeroSection() {
 
             <div>
               <label htmlFor="insta" className="block text-sm font-medium text-gray-300 mb-4">
-                Instagram Handle:
+                Instagram Handle: <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
@@ -191,7 +211,6 @@ function HeroSection() {
                 onChange={handleChange}
                 className="w-full px-4 py-2 rounded-xl bg-gray-800 border border-gray-700 text-gray-100 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400"
                 placeholder="Your description here"
-
               />
             </div>
 
@@ -208,27 +227,23 @@ function HeroSection() {
       </div>
       <ToastContainer className="z-[100000]"></ToastContainer>
       {modal && (
-            <div
-              className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50"
-              onClick={closeModal}
-            >
-             <div className="bg-[#2C3141] w-[80%]  lg:w-[50%] flex justify-center flex-col items-center rounded-xl py-10  text-white text-center">
-             <img src ="/assets/success.svg" alt="tick" />
-
-              <p className='text-center sm:px-20 px-4 mt-2 sm:text-[23px] '>
+        <div
+          className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50"
+          onClick={closeModal}
+        >
+          <div className="bg-[#2C3141] w-[80%] lg:w-[50%] flex justify-center flex-col items-center rounded-xl py-10 text-white text-center">
+            <img src="/assets/success.svg" alt="tick" />
+            <p className="text-center sm:px-20 px-4 mt-2 sm:text-[23px]">
               Thank you for submitting your details! You’ll receive regular updates and detailed information directly to your email. Stay connected with the OPH Community!
-              </p>
-              <Link to={'/'}>
-              <button
-            className="px-14 hover:font-bold mt-10 py-2 bg-[#5DC9DE] text-[#181B24] font-semibold uppercase rounded-full"
-
-          >
-           Back To Home
-          </button>
-              </Link>
-             </div>
-            </div>
-          )}
+            </p>
+            <Link to={'/'}>
+              <button className="px-14 hover:font-bold mt-10 py-2 bg-[#5DC9DE] text-[#181B24] font-semibold uppercase rounded-full">
+                Back To Home
+              </button>
+            </Link>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

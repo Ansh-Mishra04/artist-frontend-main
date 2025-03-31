@@ -370,6 +370,7 @@ function Resources() {
           ) : (
             ""
           )}
+          
 
           {isModalOpen && (
             <div

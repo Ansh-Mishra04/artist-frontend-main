@@ -24,6 +24,7 @@ const formatViews = (views) => {
   return `${views}+ views`;
 };
 
+
 const IndividualPodcast = () => {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -308,30 +309,29 @@ const IndividualPodcast = () => {
   return (
     <div className="text-white py-40 min-h-screen xl:px-16 lg:px-10 px-6 container mx-auto">
       {/* Video Preview Section */}
-      <div className="relative w-[90%] max-w-md aspect-video mb-6 rounded-lg overflow-hidden mx-auto">
-  <video
-    controls
-    download={false}
-    controlsList="nodownload"
-    ref={videoRef}
-    src={content.video_file_url}
-    className="w-full h-full object-cover"
-    poster={content.thumbnails?.[0]}
-  />
-  {!isPlaying && (
-    <button
-      onClick={togglePlayPause}
-      className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-    >
-      <img
-        src="/assets/images/playButton.png"
-        alt="Play"
-        className="w-16 h-16 opacity-80 hover:opacity-100 transition-opacity"
-      />
-    </button>
-  )}
-</div>
-
+      <div className="relative w-full aspect-video mb-8 rounded-xl overflow-hidden p-12 ">
+        <video
+          controls
+          download={false}
+          controlsList="nodownload"
+          ref={videoRef}
+          src={content.video_file_url}
+          className="w- h-full object-cover"
+          poster={content.thumbnails?.[0]}
+        />
+        {!isPlaying && (
+          <button
+            onClick={togglePlayPause}
+            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+          >
+            <img
+              src="/assets/images/playButton.png"
+              alt="Play"
+              className="w-30 h-30 opacity-80 hover:opacity-100 transition-opacity"
+            />
+          </button>
+        )}
+      </div>
 
       {/* Tags */}
       <div className="flex gap-2 text-gray-400 text-sm mb-2">
