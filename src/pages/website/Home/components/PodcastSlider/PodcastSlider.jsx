@@ -73,13 +73,17 @@ function PodcastSlider({ title }) {
 
   const handlePlayPauseVideo = (index) => {
     if (isDragging) return; // Prevent playing while dragging
-  
+
     // Pause the currently playing video if it's different
-    if (playingIndex !== null && playingIndex !== index && videoRefs.current[playingIndex]) {
+    if (
+      playingIndex !== null &&
+      playingIndex !== index &&
+      videoRefs.current[playingIndex]
+    ) {
       videoRefs.current[playingIndex].pause();
       videoRefs.current[playingIndex].currentTime = 0; // Reset the video to the beginning
     }
-  
+
     // Toggle play/pause for the clicked video
     if (playingIndex === index) {
       videoRefs.current[index].pause();
@@ -92,10 +96,6 @@ function PodcastSlider({ title }) {
       }
     }
   };
-  
-  
-
-  
 
   const stopAllVideos = () => {
     videoRefs.current.forEach((video) => {
@@ -110,12 +110,16 @@ function PodcastSlider({ title }) {
     <div className="bg-black text-white py-7">
       <div className="container mx-auto mb-12 px-4 lg:px-16">
         {title ? (
-          <h2 className="text-[#5DC9DE] text-2xl font-bold uppercase drop-shadow-[0_0_20px_white] text-center">{title}</h2>
+          <h2 className="text-[#5DC9DE] text-2xl font-bold uppercase drop-shadow-[0_0_20px_white] text-center">
+            {title}
+          </h2>
         ) : (
           <h1 className="text-xl lg:text-4xl font-bold text-center mb-8 leading-tight uppercase mt-2">
             Learn, trust – Join, Artist First,
             <br />
-            <span className="text-[#5DC9DE]">Collaboration over Competition</span>
+            <span className="text-[#5DC9DE]">
+              Collaboration over Competition
+            </span>
           </h1>
         )}
       </div>
@@ -125,7 +129,7 @@ function PodcastSlider({ title }) {
           {podcastData.map((podcast, index) => (
             <div key={index} className="px-2 lg:px-4 w-full">
               <div className="rounded-xl overflow-hidden relative">
-                  {playingIndex === index ? (
+                {playingIndex === index ? (
                   <video
                     ref={(el) => (videoRefs.current[index] = el)}
                     src={podcast.video_file_url}
@@ -150,7 +154,11 @@ function PodcastSlider({ title }) {
                       className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50"
                       onClick={() => handlePlayPauseVideo(index)}
                     >
-                      <img src={PlayButton} className="w-[80px] sm:w-[150px]" alt="Play Button" />
+                      <img
+                        src={PlayButton}
+                        className="w-[80px] sm:w-[150px]"
+                        alt="Play Button"
+                      />
                     </div>
                   </div>
                 )}
@@ -183,22 +191,29 @@ function PodcastSlider({ title }) {
         </Slider>
 
         <div className="text-center mt-6 relative z-10 mb-4">
-  <a
-    href={import.meta.env.VITE_PORTAL_URL + "/auth/signup"}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="bg-[#5DC9DE] text-black font-semibold py-3 px-8 rounded-full hover:font-bold transition delay-300 pointer-events-auto"
-    onClick={() => {
-      window.open(import.meta.env.VITE_PORTAL_URL + "/auth/signup", "_blank", "noopener,noreferrer");
-    }}
-    onTouchEnd={() => {
-      window.open(import.meta.env.VITE_PORTAL_URL + "/auth/signup", "_blank", "noopener,noreferrer");
-    }}
-  >
-    COMMUNITY PLATFORM – SIGN UP
-  </a>
-</div>
-
+          <a
+            href={import.meta.env.VITE_PORTAL_URL + "/auth/signup"}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-[#5DC9DE] text-black font-semibold py-3 px-8 rounded-full hover:font-bold transition delay-300 pointer-events-auto"
+            onClick={() => {
+              window.open(
+                import.meta.env.VITE_PORTAL_URL + "/auth/signup",
+                "_blank",
+                "noopener,noreferrer"
+              );
+            }}
+            onTouchEnd={() => {
+              window.open(
+                import.meta.env.VITE_PORTAL_URL + "/auth/signup",
+                "_blank",
+                "noopener,noreferrer"
+              );
+            }}
+          >
+            COMMUNITY PLATFORM – SIGN UP
+          </a>
+        </div>
       </div>
     </div>
   );
