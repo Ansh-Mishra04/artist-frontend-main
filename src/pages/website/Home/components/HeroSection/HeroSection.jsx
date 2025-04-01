@@ -3,9 +3,10 @@ import starAbsItem from "/assets/images/starAbsItem.png";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Elipse from "../../../../../../public/assets/images/elipse.png";
-
+import { useNavigate } from "react-router-dom";
 
 function HeroSection() {
+  const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
@@ -22,7 +23,7 @@ function HeroSection() {
         </span>
         <div className="max-w-2xl px-4 md:px-0 pt-4 md:pt-0">
           <p className="text-lg opacity-75 text-[#9BA3B7] mb-1 z-1">
-          Now you don’t need to change your music career
+            Now you don’t need to change your music career
           </p>
           <div className="relative">
             {/* Background Text */}
@@ -39,29 +40,30 @@ function HeroSection() {
             </h1>
           </div>
           <p className="text-sm lg:text-lg opacity-75 text-[#9BA3B7] opacity-90 mb-8">
-          OPH Community is a technology-driven platform that empowers artists with direct access to networking and collaboration. 
-          It is a one-stop solution for every stage of an artist's journey, ensuring they retain full ownership and revenue.
+            OPH Community is a technology-driven platform that empowers artists
+            with direct access to networking and collaboration. It is a one-stop
+            solution for every stage of an artist's journey, ensuring they
+            retain full ownership and revenue.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-start relative z-10 pointer-events-auto">
-  {/* Login Button */}
-    <button
-    onClick={() => {
-      window.location.href = import.meta.env.VITE_PORTAL_URL + "/artists";
-    }}
-    className="bg-[#5DC9DE] hover:font-bold transition delay-300 w-full lg:w-[300px] m-1 text-sm lg:text-base h-[40px] lg:h-[50px] text-black font-semibold py-3 px-8 rounded-full justify-center items-center"
-  >
-    ARTISTS PLATFORM
-  </button>
-    <button
-    onClick={() => {
-      window.location.href = import.meta.env.VITE_PORTAL_URL + "/auth/signup";
-    }}
-    className="bg-[#5DC9DE] hover:font-bold transition delay-300 w-full lg:w-[300px] m-1 text-sm lg:text-base h-[40px] lg:h-[50px] text-black font-semibold py-3 px-8 rounded-full justify-center items-center"
-  >
-    Sign Up
-  </button>
-  {/* Sign Up Button
+            {/* Login Button */}
+            <button
+              onClick={() => navigate("/artists")}
+              className="bg-[#5DC9DE] hover:font-bold transition delay-300 w-full lg:w-[300px] m-1 text-sm lg:text-base h-[40px] lg:h-[50px] text-black font-semibold py-3 px-8 rounded-full justify-center items-center"
+            >
+              ARTISTS PLATFORM
+            </button>
+            <button
+              onClick={() => {
+                window.location.href =
+                  import.meta.env.VITE_PORTAL_URL + "/auth/signup";
+              }}
+              className="bg-[#5DC9DE] hover:font-bold transition delay-300 w-full lg:w-[300px] m-1 text-sm lg:text-base h-[40px] lg:h-[50px] text-black font-semibold py-3 px-8 rounded-full justify-center items-center"
+            >
+              Sign Up
+            </button>
+            {/* Sign Up Button
   <button
     onClick={() => {
       window.open(import.meta.env.VITE_PORTAL_URL + "/auth/signup", "_blank", "noopener,noreferrer");
@@ -70,8 +72,7 @@ function HeroSection() {
   >
     SIGN UP
   </button> */}
-</div>
-
+          </div>
         </div>
       </div>
       <span className="absolute bottom-[-75px] z-30 right-0">
