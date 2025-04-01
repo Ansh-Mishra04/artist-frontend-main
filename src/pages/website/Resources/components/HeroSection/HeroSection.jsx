@@ -133,7 +133,7 @@ const HeroSection = () => {
                 searchTerm.trim() !== "" && (
                   <div className="absolute top-full mt-2 w-[100%] lg:w-[600px]">
                     <div className="h-6 mt-4 text-red-500 transition-opacity duration-500">
-                      Nothing to show.
+                      No Data Found.
                     </div>
                   </div>
                 )

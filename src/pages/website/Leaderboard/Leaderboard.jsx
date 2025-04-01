@@ -59,13 +59,13 @@ function Leaderboard() {
     const locations = new Set();
     const stageNames = new Set();
     const ranks = new Set();
-    const professions = new Set();
+    const resosions = new Set();
 
     Object.values(artistsData).flat().forEach((artist) => {
       locations.add(artist.location);
       stageNames.add(artist.stage_name);
       ranks.add(artist.rank);
-      professions.add(artist.profession);
+      professions.add(artist.profession_name);
     });
 
     setUniqueLocations([...locations]);
@@ -344,9 +344,9 @@ function Leaderboard() {
               />
             </div>
             <div className="mb-4">
-              <label className="block text-gray-300 mb-2">Proffesion</label>
+              <label className="block text-gray-300 mb-2">Profession</label>
               <Select
-                name="proffesion"
+                name="profession"
                 isMulti
                 options={uniqueProfessions.map((profession) => ({
                   value: profession,

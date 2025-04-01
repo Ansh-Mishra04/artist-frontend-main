@@ -367,7 +367,7 @@ const IndividualEvent = () => {
               <span className="text-gray-400">#Music</span>
               <span className="text-gray-400">#Winners</span> */}
               {
-                singleEvent.hashtags.map((tag,index)=>(
+                singleEvent.hashtags?.map((tag,index)=>(
                   <span key={index} className="text-gray-400">{tag}</span>
                 ))
               }
