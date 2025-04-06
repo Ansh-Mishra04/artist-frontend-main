@@ -3,6 +3,7 @@ import HeroSection from "./components/HeroSection/HeroSection";
 import PreviousEventSection from "./components/PreviousEventSection/PreviousEventSection";
 import axiosApi from "../../../conf/app";
 import { ToastContainer } from "react-toastify";
+import PaymentScreen from "./components/PaymentScreen";
 
 function Events() {
   const [professions, setProfessions] = useState([])
@@ -30,6 +31,7 @@ function Events() {
       {/* <div className="container w-full h-[.5px] mx-auto bg-white opacity-30 relative"></div> */}
       <PreviousEventSection />
       <ToastContainer className="z-[100000]" />
+      <PaymentScreen/>
     </div>
   );
 }

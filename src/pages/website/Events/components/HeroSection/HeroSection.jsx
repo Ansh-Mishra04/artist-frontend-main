@@ -288,8 +288,7 @@ function HeroSection({ professions }) {
 
             <button
               type="submit"
-              className="w-full bg-cyan-400 hover:bg-cyan-500 text-black font-medium py-2 px-4 rounded"
-            >
+              className="w-full bg-cyan-400 hover:bg-cyan-500 text-black font-medium py-2 px-4 rounded">
               Submit
             </button>
           </form>
