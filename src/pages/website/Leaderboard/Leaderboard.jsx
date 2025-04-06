@@ -10,7 +10,7 @@ function Leaderboard() {
     (state) => state.leaderboard.history_leaderboard
   );
   console.log(artistsData);
-  
+
   const loading = useSelector((state) => state.leaderboard.loading);
   const [searchArtist, setSearchArtist] = useState("");
   const artistRefs = useRef({});
@@ -59,14 +59,16 @@ function Leaderboard() {
     const locations = new Set();
     const stageNames = new Set();
     const ranks = new Set();
-    const resosions = new Set();
+    const professions = new Set();
 
-    Object.values(artistsData).flat().forEach((artist) => {
-      locations.add(artist.location);
-      stageNames.add(artist.stage_name);
-      ranks.add(artist.rank);
-      professions.add(artist.profession_name);
-    });
+    Object.values(artistsData)
+      .flat()
+      .forEach((artist) => {
+        locations.add(artist.location);
+        stageNames.add(artist.stage_name);
+        ranks.add(artist.rank);
+        professions.add(artist.profession_name);
+      });
 
     setUniqueLocations([...locations]);
     setUniqueStageNames([...stageNames]);
@@ -91,7 +93,9 @@ function Leaderboard() {
     const { name } = actionMeta;
     setFilters((prevFilters) => ({
       ...prevFilters,
-      [name]: selectedOptions ? selectedOptions.map((option) => option.value) : [],
+      [name]: selectedOptions
+        ? selectedOptions.map((option) => option.value)
+        : [],
     }));
   };
 
@@ -104,8 +108,9 @@ function Leaderboard() {
             filters.location.includes(artist.location)) &&
           (filters.stageName.length === 0 ||
             filters.stageName.includes(artist.stage_name)) &&
-          (filters.rank.length === 0 || filters.rank.includes(artist.rank)) && 
-          (filters.profession.length === 0 ||filters.profession.includes(artist.profession))
+          (filters.rank.length === 0 || filters.rank.includes(artist.rank)) &&
+          (filters.profession.length === 0 ||
+            filters.profession.includes(artist.profession))
         );
       });
     setArtistExists(filteredArtists);
@@ -115,36 +120,36 @@ function Leaderboard() {
   const customStyles = {
     control: (provided) => ({
       ...provided,
-      backgroundColor: 'black',
-      color: 'white',
+      backgroundColor: "black",
+      color: "white",
     }),
     menu: (provided) => ({
       ...provided,
-      backgroundColor: 'grey',
+      backgroundColor: "grey",
     }),
     option: (provided, state) => ({
       ...provided,
-      backgroundColor: state.isSelected ? 'black' : 'grey',
-      color: 'white',
-      '&:hover': {
-        backgroundColor: 'black',
+      backgroundColor: state.isSelected ? "black" : "grey",
+      color: "white",
+      "&:hover": {
+        backgroundColor: "black",
       },
     }),
     multiValue: (provided) => ({
       ...provided,
-      backgroundColor: 'black',
-      color: 'white',
+      backgroundColor: "black",
+      color: "white",
     }),
     multiValueLabel: (provided) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
     multiValueRemove: (provided) => ({
       ...provided,
-      color: 'white',
-      '&:hover': {
-        backgroundColor: 'black',
-        color: 'white',
+      color: "white",
+      "&:hover": {
+        backgroundColor: "black",
+        color: "white",
       },
     }),
   };
@@ -154,7 +159,9 @@ function Leaderboard() {
       {loading && (
         <div className="text-center h-[90vh] w-full py-32">
           <div className="animate-spin rounded-full w-12 h-12 border-b-2 border-[#5DC9DE] mx-auto"></div>
-          <p className="mt-2 text-[#5DC9DE]">🎤 "Warming up the mic... Almost there!"</p>
+          <p className="mt-2 text-[#5DC9DE]">
+            🎤 "Warming up the mic... Almost there!"
+          </p>
         </div>
       )}
       {!loading && (
@@ -169,9 +176,14 @@ function Leaderboard() {
             <div className="container w-full mb-8 h-[1px] mx-auto bg-gray-400 opacity-30 relative"></div>
           </div>
           {Object.entries(artistsData).map(([title, artists]) => (
-            <div key={title} className="bg-black hidden sm:block p-4 md:px-10 xl:px-16 text-white">
+            <div
+              key={title}
+              className="bg-black hidden sm:block p-4 md:px-10 xl:px-16 text-white"
+            >
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-[#5DC9DE] text-2xl font-bold uppercase drop-shadow-[0_0_20px_white]">{title}</h2>
+                <h2 className="text-[#5DC9DE] text-2xl font-bold uppercase drop-shadow-[0_0_20px_white]">
+                  {title}
+                </h2>
               </div>
 
               {/* Table Header */}
@@ -182,23 +194,27 @@ function Leaderboard() {
                 <div className="flex-1 hidden sm:block">Location</div>
                 <div className="flex-1 text-center">Songs</div>
                 <div className="flex-1 text-center">Reach</div>
-                <div className="flex-1 hidden sm:block text-center">Profile</div>
+                <div className="flex-1 hidden sm:block text-center">
+                  Profile
+                </div>
               </div>
-      <div className="container w-full  h-[1px] mx-auto bg-gray-400 opacity-30 relative"></div>
-
+              <div className="container w-full  h-[1px] mx-auto bg-gray-400 opacity-30 relative"></div>
 
               {/* Artist Rows */}
               <div className="space-y-2">
                 {artists.map((artist, index) => (
                   <div
                     key={artist.artist_id}
-                    ref={(el) => (artistRefs.current[artist.stage_name.toLowerCase()] = el)}
+                    ref={(el) =>
+                      (artistRefs.current[artist.stage_name.toLowerCase()] = el)
+                    }
                     onClick={() => handleProfileClick(artist.artist_id)}
                     className={`flex items-center px-4 py-3 rounded-lg transition-colors cursor-pointer ${
                       artistExists &&
                       artistExists.some(
                         (art) =>
-                          art.stage_name.toLowerCase() === artist.stage_name.toLowerCase() ||
+                          art.stage_name.toLowerCase() ===
+                            artist.stage_name.toLowerCase() ||
                           art.name.toLowerCase() === artist.name.toLowerCase()
                       )
                         ? "bg-[#6F4FA0] text-white"
@@ -217,7 +233,9 @@ function Leaderboard() {
                             : "p-2 text-gray-300"
                         }`}
                       >
-                        {artist.rank < 10 ? `0${artist.rank}` : `${artist.rank}`}
+                        {artist.rank < 10
+                          ? `0${artist.rank}`
+                          : `${artist.rank}`}
                       </span>
                     </div>
 
@@ -231,10 +249,18 @@ function Leaderboard() {
                       </div>
                     </div>
 
-                    <div className="flex-1 text-gray-300">{artist.stage_name}</div>
-                    <div className="flex-1 text-gray-300 hidden sm:block">{artist.location}</div>
-                    <div className="flex-1 text-center text-gray-300">{artist.total_songs}</div>
-                    <div className="flex-1 text-center text-gray-300">{formatListeners(artist.total_reach)}</div>
+                    <div className="flex-1 text-gray-300">
+                      {artist.stage_name}
+                    </div>
+                    <div className="flex-1 text-gray-300 hidden sm:block">
+                      {artist.location}
+                    </div>
+                    <div className="flex-1 text-center text-gray-300">
+                      {artist.total_songs}
+                    </div>
+                    <div className="flex-1 text-center text-gray-300">
+                      {formatListeners(artist.total_reach)}
+                    </div>
 
                     {/* Show the View Profile button on medium screens and above */}
                     <div className="flex-1 justify-center items-center w-full hidden sm:flex">
@@ -253,7 +279,10 @@ function Leaderboard() {
             </div>
           ))}
           {Object.entries(artistsData).map(([title, artists]) => (
-            <div key={title} className="bg-black block sm:hidden p-4 md:px-10 xl:px-16 text-white">
+            <div
+              key={title}
+              className="bg-black block sm:hidden p-4 md:px-10 xl:px-16 text-white"
+            >
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-[#5DC9DE] text-2xl font-bold">{title}</h2>
               </div>
@@ -265,7 +294,9 @@ function Leaderboard() {
                 <div className="flex-1">Stage Name</div>
                 <div className="flex-1 text-center">Songs</div>
                 <div className="flex-1 text-center">Reach</div>
-                <div className="flex-1 hidden sm:block text-center">Profile</div>
+                <div className="flex-1 hidden sm:block text-center">
+                  Profile
+                </div>
               </div>
               <div className="container w-full  h-[1px] mx-auto bg-gray-400 opacity-30 relative"></div>
 
@@ -274,13 +305,16 @@ function Leaderboard() {
                 {artists.map((artist, index) => (
                   <div
                     key={artist.artist_id}
-                    ref={(el) => (artistRefs.current[artist.stage_name.toLowerCase()] = el)}
+                    ref={(el) =>
+                      (artistRefs.current[artist.stage_name.toLowerCase()] = el)
+                    }
                     onClick={() => handleProfileClick(artist.artist_id)}
                     className={`flex items-center px-4 py-3 rounded-lg transition-colors cursor-pointer ${
                       artistExists &&
                       artistExists.some(
                         (art) =>
-                          art.stage_name.toLowerCase() === artist.stage_name.toLowerCase() ||
+                          art.stage_name.toLowerCase() ===
+                            artist.stage_name.toLowerCase() ||
                           art.name.toLowerCase() === artist.name.toLowerCase()
                       )
                         ? "bg-[#6F4FA0] text-white"
@@ -299,7 +333,9 @@ function Leaderboard() {
                             : "p-2 text-gray-300"
                         }`}
                       >
-                        {artist.rank < 10 ? `0${artist.rank}` : `${artist.rank}`}
+                        {artist.rank < 10
+                          ? `0${artist.rank}`
+                          : `${artist.rank}`}
                       </span>
                     </div>
 
@@ -312,9 +348,15 @@ function Leaderboard() {
                         />
                       </div>
                     </div>
-                    <div className="flex-1 text-gray-300">{artist.stage_name}</div>
-                    <div className="flex-1 text-center text-gray-300">{artist.total_songs}</div>
-                    <div className="flex-1 text-center text-gray-300">{formatListeners(artist.total_reach)}</div>
+                    <div className="flex-1 text-gray-300">
+                      {artist.stage_name}
+                    </div>
+                    <div className="flex-1 text-center text-gray-300">
+                      {artist.total_songs}
+                    </div>
+                    <div className="flex-1 text-center text-gray-300">
+                      {formatListeners(artist.total_reach)}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -327,7 +369,9 @@ function Leaderboard() {
       {showFilterModal && (
         <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
           <div className="bg-black p-6 rounded-lg max-w-md w-full">
-            <h2 className="text-2xl font-bold mb-4 text-white">Filter Artists</h2>
+            <h2 className="text-2xl font-bold mb-4 text-white">
+              Filter Artists
+            </h2>
             <div className="mb-4">
               <label className="block text-gray-300 mb-2">Location</label>
               <Select
@@ -358,7 +402,7 @@ function Leaderboard() {
                 onChange={handleFilterChange}
               />
             </div>
-            
+
             <div className="flex justify-end">
               <button
                 className="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg mr-2"

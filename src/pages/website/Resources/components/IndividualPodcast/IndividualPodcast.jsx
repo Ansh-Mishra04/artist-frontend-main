@@ -47,6 +47,19 @@ const IndividualPodcast = () => {
   const commentsReactionRef = useRef({});
   const [refresh, setRefresh] = useState(false);
 
+  // Prevent body scrolling when component mounts
+  useEffect(() => {
+    // Fix the body scroll position at the top when this component mounts
+    window.scrollTo(0, 0);
+    // Ensure the body can scroll for this view
+    document.body.style.overflow = "";
+
+    return () => {
+      // Reset any body styles when unmounting
+      document.body.style.overflow = "";
+    };
+  }, []);
+
   const initializeSocket = () => {
     try {
       const newSocket = io(import.meta.env.VITE_SOCKET_URL, {

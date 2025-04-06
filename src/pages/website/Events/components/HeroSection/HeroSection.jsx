@@ -9,8 +9,7 @@ import { Bounce, toast, ToastContainer } from "react-toastify";
 import axiosApi from "../../../../../conf/app";
 
 const instagramRegex =
-  /^(https?:\/\/)?(www\.)?instagram\.com\/([a-zA-Z0-9._]+)\/?/
-
+  /^(https?:\/\/)?(www\.)?instagram\.com\/([a-zA-Z0-9._]+)\/?/;
 
 function HeroSection({ professions }) {
   const navigate = useNavigate();
@@ -111,8 +110,11 @@ function HeroSection({ professions }) {
       phone: "",
     });
 
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
     const handleSubmit = async (e) => {
       e.preventDefault();
+      if (isSubmitting) return; // Prevent multiple submissions
       console.log("Form submitted:", formData);
       if (!instagramRegex.test(formData.instagram_handle)) {
         toast.error(
@@ -146,21 +148,56 @@ function HeroSection({ professions }) {
         });
         return;
       }
-      const response = await axiosApi.post(`/events/bookings/${id}`, formData);
-      if (response.status == 201) {
-        toast.success("Registration Successfull", {
-          position: "top-right",
-          autoClose: 4000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-          transition: Bounce,
-        });
-        setIsModalOpen(false);
-      } else {
+
+      setIsSubmitting(true); // Set submitting state to true
+
+      try {
+        const response = await axiosApi.post(
+          `/events/bookings/${id}`,
+          formData
+        );
+        if (response.status == 201) {
+          toast.success("Registration Successfull", {
+            position: "top-right",
+            autoClose: 4000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            transition: Bounce,
+          });
+          setIsModalOpen(false);
+
+          // Find the current event to get the fee
+          const currentEvent = upcomingEvents.find((event) => event.id === id);
+
+          // Navigate to payment page with required data
+          navigate("/payment", {
+            state: {
+              amount: currentEvent.fees, // Event registration fee
+              returnPath: `/events`,
+              heading: "Event Registration Fee",
+              eventId: id,
+              bookingId: response.data.id, // If your API returns the booking ID
+            },
+          });
+        } else {
+          toast.error("Something went wrong", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            transition: Bounce,
+          });
+        }
+      } catch (error) {
+        console.error("Error during registration:", error);
         toast.error("Something went wrong", {
           position: "top-right",
           autoClose: 5000,
@@ -172,6 +209,8 @@ function HeroSection({ professions }) {
           theme: "dark",
           transition: Bounce,
         });
+      } finally {
+        setIsSubmitting(false); // Reset submitting state
       }
     };
 
@@ -288,8 +327,10 @@ function HeroSection({ professions }) {
 
             <button
               type="submit"
-              className="w-full bg-cyan-400 hover:bg-cyan-500 text-black font-medium py-2 px-4 rounded">
-              Submit
+              className="w-full bg-cyan-400 hover:bg-cyan-500 text-black font-medium py-2 px-4 rounded"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Submitting..." : "Submit"}
             </button>
           </form>
         </div>
