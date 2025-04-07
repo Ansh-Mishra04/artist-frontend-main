@@ -1,4 +1,4 @@
-import semiColonIc from "/assets/images/semiColonIc.png";
+import semiColonIc from "../../../../../../public/assets/images/semiColonIc.png";
 import starAbsItem from "/assets/images/starAbsItem.png";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -18,7 +18,7 @@ function HeroSection() {
   return (
     <div className="w-full  sm:pt-0 py-5 md:py-10 lg:py-20 flex items-center justify-start bg-cover bg-center relative ps-8">
       <div className="container pt-5 mx-auto mt-24 mb-24  relative">
-        <span className="absolute z-0 top-[2%] ">
+        <span className="absolute z-0 top-[15%] left-[3%]">
           <img src={semiColonIc} className="h-16" alt="Semicolon Icon" />
         </span>
         <div className="max-w-2xl px-4 md:px-0 pt-4 md:pt-0">
@@ -39,7 +39,7 @@ function HeroSection() {
               YOUR STAGES
             </h1>
           </div>
-          <p className="text-sm lg:text-lg opacity-75 text-[#9BA3B7] opacity-90 mb-8">
+          <p className="text-sm lg:text-lg opacity-90 text-[#9BA3B7] mb-8">
             OPH Community is a technology-driven platform that empowers artists
             with direct access to networking and collaboration. It is a one-stop
             solution for every stage of an artist's journey, ensuring they

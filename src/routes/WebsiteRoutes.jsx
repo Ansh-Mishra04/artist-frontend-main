@@ -9,6 +9,7 @@ import Resources from "../pages/website/Resources/Resources";
 import IndividualPodcast from "../pages/website/Resources/components/IndividualPodcast/IndividualPodcast";
 import IndividualEvent from "../pages/website/Events/components/IndividualEvent/IndividualEvent";
 import MusicPlayerProfile from "../pages/website/Artists/components/MusicPlayerProfile";
+import PaymentScreen from "../pages/website/Events/components/PaymentScreen";
 
 // import SignIn from "../pages/auth/SignIn/SignIn";
 // import SignUp from "../pages/auth/SignUp/SignUp";
@@ -22,30 +23,29 @@ import { Provider } from "react-redux";
 import { publicStore } from "../app/public";
 import Error from "../pages/website/Error";
 
-
 const WebsiteRoutes = () => {
   return (
-
     <Provider store={publicStore}>
-        <Routes>
-      <Route path="/" element={<WebsiteLayout />}>
-        <Route index element={<Home />} />
-        <Route path="contact" element={<Contact />} />
-        <Route path="events" element={<Events />} />
-        <Route path="events/:id" element={<IndividualEvent />} />
-        <Route path="artists" element={<Artists />} />
-        <Route path="artists/:id" element={<MusicPlayerProfile />} />
-        <Route path="leaderboard" element={<Leaderboard />} />
-        <Route path="resources" element={<Resources />} />
-        <Route path="content/:id" element={<IndividualPodcast />} />
-        <Route path="*" element={<Error />} />
+      <Routes>
+        <Route path="/" element={<WebsiteLayout />}>
+          <Route index element={<Home />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="events" element={<Events />} />
+          <Route path="events/:id" element={<IndividualEvent />} />
+          <Route path="/payment" element={<PaymentScreen />} />
+          <Route path="artists" element={<Artists />} />
+          <Route path="artists/:id" element={<MusicPlayerProfile />} />
+          <Route path="leaderboard" element={<Leaderboard />} />
+          <Route path="resources" element={<Resources />} />
+          <Route path="content/:id" element={<IndividualPodcast />} />
+          <Route path="*" element={<Error />} />
 
-        {/* Route for signin, signup and payment, change later */}
-        {/* <Route path="signin" element={<SignIn />} />
+          {/* Route for signin, signup and payment, change later */}
+          {/* <Route path="signin" element={<SignIn />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="forgot-password" element={<ForgotPassword />} /> */}
-        {/* <Route path="payment" element={<PaymentScreen />} /> */}
-        {/* <Route
+          {/* <Route path="payment" element={<PaymentScreen />} /> */}
+          {/* <Route
           path="create-profile/personal-details"
           element={<PersonalDetailsForm />}
         />
@@ -58,8 +58,8 @@ const WebsiteRoutes = () => {
           element={<DocumentationDetailsForm />}
         />
         <Route path="profile-status" element={<ProfileStatus />} /> */}
-      </Route>
-    </Routes>
+        </Route>
+      </Routes>
     </Provider>
   );
 };
