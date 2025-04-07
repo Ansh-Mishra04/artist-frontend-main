@@ -89,7 +89,8 @@ const MusicPlayerProfile2 = () => {
     };
     return val[(rank % 5) + 1];
   }
-
+console.log(artistData);
+  
   return artistData.length > 0 ? (
     <div className="toppicks-section xl:px-16 pt-20 pb-14 bg-black z-20 relative text-white over lg:px-10 px-6">
       <div className="mx-auto">
@@ -116,7 +117,7 @@ const MusicPlayerProfile2 = () => {
             <button
               onClick={() => sliderRef.current.slickNext()} // Use slickNext()
               className="z-10 bg-[#6F4FA0] mt-3 lg:mt-0 p-2 rounded-full hover:bg-[#6F4FA0] transition-colors"
-            >
+              >
               <img
                 src={arrowRightIc}
                 alt="Next"
@@ -127,6 +128,8 @@ const MusicPlayerProfile2 = () => {
         </div>
 
         {/* Add ref to the Slider component */}
+        
+        
         <Slider ref={sliderRef} {...settings} className="gap-6">
           {artistData &&
             artistData.map((artist, index) => (
