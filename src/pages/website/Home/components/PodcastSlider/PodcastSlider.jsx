@@ -188,8 +188,8 @@ function PodcastSlider({ title }) {
                 </Link>
                 <div className="text-gray-400 text-sm sm:text-base">
                   <span>{podcast.artist_name}</span>
-                  <span className="mx-2">—</span>
-                  <span>{ podcast.duration_in_minutes || "--"} min</span>
+                  {/* <span className="mx-2">—</span> */}
+                  {/* <span>{ podcast.duration_in_minutes || "--"} min</span> */}
                   <span className="mx-2">—</span>
                   <span>{formatListeners(podcast.total_views)}</span>
                 </div>
