@@ -67,6 +67,8 @@ function Leaderboard() {
         locations.add(artist.location);
         stageNames.add(artist.stage_name);
         ranks.add(artist.rank);
+        console.log(artist, "artist.profession_name");
+        
         professions.add(artist.profession_name);
       });
 
