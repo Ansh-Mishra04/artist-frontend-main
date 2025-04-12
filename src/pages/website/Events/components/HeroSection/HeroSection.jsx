@@ -177,10 +177,12 @@ function HeroSection({ professions }) {
           navigate("/payment", {
             state: {
               amount: currentEvent.fees, // Event registration fee
-              returnPath: `/events`,
+              returnPath: `/events`, // Redirect to event page after payment
+              event_id: currentEvent.id,
               heading: "Event Registration Fee",
               eventId: id,
-              bookingId: response.data.id, // If your API returns the booking ID
+              planIds: [3], 
+              bookingId: response.data.id, 
             },
           });
         } else {

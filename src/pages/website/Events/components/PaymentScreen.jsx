@@ -1,89 +1,67 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import axios from "axios";
-import { toast } from "react-toastify";
-const axiosApi = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
-  // baseURL : "http://localhost:3000/api/",
-  withCredentials: true,
-});
-
-const Loading = () => {
-  return (
-    <div className="fixed inset-0 bg-black/80 flex flex-col items-center justify-center z-50">
-      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-cyan-400"></div>
-      <p className="mt-4 text-cyan-400 text-center">
-        🎵 Loading inspiration, empowering artists, and unlocking possibilities
-        through our platform...
-      </p>
-    </div>
-  );
-};
+import axiosApi from "../../../../conf/app";
+// import Loading from "../../components/Loading";
 const PaymentScreen = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [trans, setTrans] = useState("");
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const {
     artist_id,
-    eventId,
-    bookingId,
     amount = 0,
     planIds = [],
     paymentIds = [], // Optional existing payment IDs
     returnPath = "/",
     heading = "Payment Required",
-    paymentType = eventId ? "event" : "subscription",
   } = location.state || {};
-
-  const isValidTransactionId = (transId) => {
-    return transId.trim().length > 8; // Add your validation logic here
-  };
 
   const handlePaymentSuccess = async (e) => {
     e.preventDefault();
-
-    if (!isValidTransactionId(trans)) {
-      setError("Invalid transaction ID. Please try again.");
-      return;
-    }
-    setLoading(true);
+    // setLoading(true);
     setError(null);
 
     try {
-      if (paymentType === "event") {
-        const formData = {
-          trans_id: trans,
-          event_id: eventId,
-          booking_id: bookingId,
-        };
+      const formData = {
+        trans_id: trans,
+        artist_id: artist_id,
+        plan_ids: [3],
+      };
 
-        const response = await axiosApi.post("/events/payments", formData);
+      const response = await axiosApi.post("/payments/multi", formData);
 
-        // Return to calling screen with success status
-        navigate(returnPath, {
+      // check if this payment is from date change
+      if (location.state?.fromDateChange) {
+        console.log("date change");
+        
+        // if yes, then navigate to date change success page
+        navigate("/dashboard/success", {
           state: {
-            status: "success",
-            message: "Event registration payment successful!",
+            heading: "Date Changed Successfully!",
+            btnText: "View Calendar",
+            redirectTo: "/dashboard/time-calendar",
           },
           replace: true,
         });
-
-        toast.success("Payment successful! Your spot is confirmed.", {
-          position: "top-right",
-          autoClose: 4000,
+      } else if (returnPath === "/events") {
+        console.log("events");
+        
+        // Navigate to success page for ticket submission
+        navigate("/success", {
+          state: {
+            heading: "Registration Successful!",
+            btnText: "Check Out More Events",
+            redirectTo: "/events",
+          },
+          replace: true,
         });
       } else {
-        // Handle subscription payment (existing logic)
-        const formData = {
-          trans_id: trans,
-          artist_id: artist_id,
-          plan_ids: planIds,
-        };
-
-        const response = await axiosApi.post("/payments/multi", formData);
+        console.log("other");
+        
+        // preserve the toast parameters from the original navigation
+        const { showSuccessToast, successMessage } = location.state || {};
 
         // Return to calling screen with payment data
         navigate(returnPath, {
@@ -94,6 +72,8 @@ const PaymentScreen = () => {
               existingPaymentIds: paymentIds,
               transactionId: trans,
             },
+            showSuccessToast,
+            successMessage,
           },
           replace: true,
         });
@@ -102,19 +82,17 @@ const PaymentScreen = () => {
       console.error("Payment error:", err);
       setError("Payment processing failed. Please try again.");
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
   const handleCancel = () => {
     if (returnPath.includes("auth")) {
-      navigate("/login");
-      return;
+      logout();
     }
     navigate(returnPath, {
       state: {
         status: "cancelled",
-        message: "Payment was cancelled.",
       },
       replace: true,
     });
@@ -122,7 +100,7 @@ const PaymentScreen = () => {
 
   return (
     <div className="relative">
-      {loading && <Loading />}
+      
       <div className="bg-black min-h-[calc(100vh-70px)] text-white flex flex-col items-center justify-center p-8">
         <h1 className="text-cyan-400 text-xl font-extrabold mb-4 drop-shadow-[0_0_15px_rgba(34,211,238,1)] text-center">
           {heading} <span className="text-cyan-400">₹{amount}/-</span>
@@ -153,7 +131,7 @@ const PaymentScreen = () => {
               onChange={(e) => setTrans(e.target.value)}
               className="w-full bg-gray-800 rounded-md px-4 py-3 text-white"
               required
-              disabled={loading}
+              // disabled={loading}
             />
 
             <div className="flex gap-4">
@@ -161,7 +139,7 @@ const PaymentScreen = () => {
                 type="button"
                 onClick={handleCancel}
                 className="w-full border border-cyan-400 text-cyan-400 py-3 rounded-md"
-                disabled={loading}
+                // disabled={loading}
               >
                 Cancel
               </button>
@@ -169,9 +147,9 @@ const PaymentScreen = () => {
               <button
                 type="submit"
                 className="w-full bg-cyan-400 text-black py-3 rounded-md flex items-center justify-center gap-2 disabled:opacity-50"
-                disabled={loading || !trans.trim()}
+                // disabled={loading}
               >
-                {loading ? "Processing..." : "Confirm Payment"}
+                {/* {loading ? "Processing..." : "Confirm Payment"} */}
               </button>
             </div>
           </form>

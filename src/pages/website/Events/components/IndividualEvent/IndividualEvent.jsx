@@ -168,10 +168,11 @@ const IndividualEvent = () => {
           navigate("/payment", {
             state: {
               amount: singleEvent.fees, // Event registration fee
-              returnPath: `/events/${id}`,
+              returnPath: `/events`,
               heading: "Event Registration Fee",
               // Add any other required parameters
-              eventId: id,
+              planIds:[3],
+              event_id: id,
               bookingId: response.data.id, // If your API returns the booking ID
             },
           });

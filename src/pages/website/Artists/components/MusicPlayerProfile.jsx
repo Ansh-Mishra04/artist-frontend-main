@@ -273,6 +273,13 @@ const MusicPlayerProfile = () => {
                       className="opacity-70 w-10 h-10 object-cover hover:opacity-100"
                     />
                   </a>
+                  <a href={artist.story_url} className="text-white hover:text-white">
+                    <img
+                      src={Twitter }  
+                      alt="Social"
+                      className="opacity-70 w-10 h-10 object-cover hover:opacity-100"/>
+
+                  </a>
                 </div>
               </div>
             </div>

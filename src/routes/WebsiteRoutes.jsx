@@ -22,6 +22,7 @@ import PaymentScreen from "../pages/website/Events/components/PaymentScreen";
 import { Provider } from "react-redux";
 import { publicStore } from "../app/public";
 import Error from "../pages/website/Error";
+import SuccessScreen from "../pages/website/Events/components/SuccessScreen";
 
 const WebsiteRoutes = () => {
   return (
@@ -32,12 +33,13 @@ const WebsiteRoutes = () => {
           <Route path="contact" element={<Contact />} />
           <Route path="events" element={<Events />} />
           <Route path="events/:id" element={<IndividualEvent />} />
-          <Route path="/payment" element={<PaymentScreen />} />
+          <Route path="payment" element={<PaymentScreen />} />
           <Route path="artists" element={<Artists />} />
           <Route path="artists/:id" element={<MusicPlayerProfile />} />
           <Route path="leaderboard" element={<Leaderboard />} />
           <Route path="resources" element={<Resources />} />
           <Route path="content/:id" element={<IndividualPodcast />} />
+          <Route path="success" element={<SuccessScreen />} />
           <Route path="*" element={<Error />} />
 
           {/* Route for signin, signup and payment, change later */}

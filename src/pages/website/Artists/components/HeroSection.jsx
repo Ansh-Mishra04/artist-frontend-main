@@ -71,11 +71,11 @@ const HeroSection = () => {
       {/* Content */}
       <div className="relative z-20 max-w-3xl w-full text-center space-y-6">
         <h1 className="text-4xl sm:text-5xl font-bold">
-        FIND YOUR  <span className="text-[#5DC9DE]">COLLABORATOR</span>
+          FIND YOUR <span className="text-[#5DC9DE]">COLLABORATOR</span>
         </h1>
 
         <p className="text-gray-300 px-4 sm:text-base lg:text-lg">
-        No need to look anywhere else—every music artist you seek is right here.
+          No need to look anywhere else—every music artist you seek is right here.
         </p>
 
         {/* Search bar */}
@@ -98,38 +98,43 @@ const HeroSection = () => {
             </button>
           </div>
 
-          {/* Search results dropdown */}
+          {/* Search results table dropdown */}
           {isDropdownOpen && inputName && (
-            <ul className="absolute w-[90%] sm:w-[600px] pb-10 bg-gray-800/95 text-white rounded-md shadow-lg backdrop-blur-sm z-[200000]
-       max-h-64 overflow-y-auto border bottom-0 translate-y-full border-gray-700">
+            <div className="absolute w-[90%] sm:w-[600px] pb-4 bg-gray-800/95 text-white rounded-md shadow-lg backdrop-blur-sm z-[200000] max-h-64 overflow-y-auto border bottom-0 translate-y-full border-gray-700">
               {loading ? (
-                <li className="px-4 py-3">Loading...</li>
+                <div className="px-4 py-3">Loading...</div>
               ) : searchResults.length > 0 ? (
-                searchResults.map((artist) => (
-                  <li
-                    key={artist.id}
-                    className="px-4 py-4 hover:bg-gray-700/50 cursor-pointer transition-colors border-b border-gray-700 last:border-b-0"
-                    onClick={() => handleSelectArtist(artist)}
-                    onKeyDown={(e) => e.key === "Enter" && handleSelectArtist(artist)}
-                    tabIndex={0}
-                    role="button"
-                  >
-                    <div className="flex justify-between items-center gap-4">
-                      <div className="min-w-0 flex-1 flex items-center gap-4">
-                        <p className="font-medium truncate">{artist.stage_name}</p>
-                        <p className="text-sm text-gray-300 truncate">{artist.name}</p>
-                      </div>
-                      <div className="text-right flex-shrink-0">
-                        <p className="text-sm">{artist.total_songs} Songs</p>
-                        <p className="text-sm text-gray-300">{artist.total_views} Views</p>
-                      </div>
-                    </div>
-                  </li>
-                ))
+                <table className="w-full text-left text-sm table-auto border-collapse">
+                  <thead className="sticky top-0 bg-gray-900 text-white">
+                    <tr>
+                      <th className="px-4 py-2 border-b border-gray-700">Stage Name</th>
+                      <th className="px-4 py-2 border-b border-gray-700">Name</th>
+                      <th className="px-4 py-2 border-b border-gray-700">Songs</th>
+                      <th className="px-4 py-2 border-b border-gray-700">Views</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {searchResults.map((artist) => (
+                      <tr
+                        key={artist.id}
+                        className="hover:bg-gray-700/50 cursor-pointer transition-colors"
+                        onClick={() => handleSelectArtist(artist)}
+                        onKeyDown={(e) => e.key === "Enter" && handleSelectArtist(artist)}
+                        tabIndex={0}
+                        role="button"
+                      >
+                        <td className="px-4 py-2 border-b border-gray-700 truncate">{artist.stage_name}</td>
+                        <td className="px-4 py-2 border-b border-gray-700 truncate">{artist.name}</td>
+                        <td className="px-4 py-2 border-b border-gray-700">{artist.total_songs}</td>
+                        <td className="px-4 py-2 border-b border-gray-700">{artist.total_views}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               ) : (
-                <li className="px-4 py-3">No artists found</li>
+                <div className="px-4 py-3">No artists found</div>
               )}
-            </ul>
+            </div>
           )}
         </div>
       </div>
