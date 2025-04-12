@@ -6,6 +6,7 @@ import Face from "../../../../../public/assets/images/facebook.png";
 import Twitter from "../../../../../public/assets/images/twitter.png";
 import Linkedin from "../../../../../public/assets/images/linkedin.png";
 import Insta from "../../../../../public/assets/images/instagram.png";
+import Story from "../../../../../public/assets/images/story.png";
 import { useSelector } from "react-redux";
 import { IoIosArrowRoundDown } from "react-icons/io";
 const MusicPlayerProfile = () => {
@@ -65,6 +66,17 @@ const MusicPlayerProfile = () => {
     }
 
     // console.log(JSON.stringify(artist));
+  };
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleModalOpen = (e) => {
+    e.preventDefault(); // prevents navigation
+    setIsOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsOpen(false);
   };
 
   const handlePlayPauseVideo = () => {
@@ -273,13 +285,63 @@ const MusicPlayerProfile = () => {
                       className="opacity-70 w-10 h-10 object-cover hover:opacity-100"
                     />
                   </a>
-                  <a href={artist.story_url} className="text-white hover:text-white">
-                    <img
-                      src={Twitter }  
-                      alt="Social"
-                      className="opacity-70 w-10 h-10 object-cover hover:opacity-100"/>
 
-                  </a>
+                  <div>
+                    {artist?.story_url ? (
+                      <>
+                        {/* Image trigger */}
+                        <a
+                          href={artist.story_url}
+                          className="text-white hover:text-white"
+                          onClick={handleModalOpen}
+                        >
+                          <img
+                            src={Story}
+                            alt="Social"
+                            className="opacity-70 w-10 h-10 object-cover hover:opacity-100"
+                          />
+                        </a>
+
+                        {/* Modal */}
+                        {isOpen && (
+                          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70">
+                            <div className="relative w-[90%] max-w-2xl bg-white rounded-2xl shadow-xl p-4">
+                              {/* Close button */}
+                              <button
+                                onClick={handleModalClose}
+                                className="absolute top-2 right-2 text-gray-500 hover:text-gray-800 text-2xl"
+                              >
+                                &times;
+                              </button>
+
+                              {/* Video */}
+                              <div className="aspect-w-16 aspect-h-9">
+                                <video
+                                  controls
+                                  autoPlay
+                                  className="w-full h-full rounded-lg"
+                                >
+                                  <source
+                                    src={artist.story_url}
+                                    type="video/mp4"
+                                  />
+                                  Your browser does not support the video tag.
+                                </video>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </>
+                    ) : (
+                      <button className="disabled opacity-50 cursor-not-allowed">
+                        <img
+                          src={Story}
+                          alt="Social"
+                          className="opacity-70 w-10 h-10 object-cover hover:opacity-50"
+                        />
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

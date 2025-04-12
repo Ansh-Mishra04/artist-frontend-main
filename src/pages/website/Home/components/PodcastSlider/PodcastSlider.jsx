@@ -50,16 +50,10 @@ function PodcastSlider({ title }) {
     ],
   };
 
-  
-
-
   const fetchContents = async () => {
     try {
-      
       const response = await axiosApi.get("/content/search?tags=1");
       setPodcastData(response.data.data);
-
-      
     } catch (error) {
       console.log(error);
     }
@@ -188,10 +182,17 @@ function PodcastSlider({ title }) {
                 </Link>
                 <div className="text-gray-400 text-sm sm:text-base">
                   <span>{podcast.artist_name}</span>
-                  {/* <span className="mx-2">—</span> */}
-                  {/* <span>{ podcast.duration_in_minutes || "--"} min</span> */}
+                  <span className="mx-2">—</span>
+                  <span>{podcast.duration_in_minutes || "--"} min</span>
                   <span className="mx-2">—</span>
                   <span>{formatListeners(podcast.total_views)}</span>
+                  <br />
+                  <span>{podcast.credit_name || ""}</span>
+                  <span>
+                    {podcast.keywords?.map((keyword, index) => (
+                      <span key={index}>{keyword}</span>
+                    )) }
+                  </span>
                 </div>
               </div>
             </div>
